@@ -1,3 +1,24 @@
+<script>
+// Verbose range implementation
+function range(topLeft,bottomRight){
+  console.log(4)
+  var output = []
+    , column = topLeft.substring(0,1)
+    , row = 0+topLeft.slice(1)
+  console.log(column)
+  while(column <= bottomRight.substring(0,1)){
+    output.push([])
+    while(row <= bottomRight.slice(1)){
+      output[output.length].push(localStorage[column+row])
+      row++
+    }
+    column = String.fromCharCode(column.charCodeAt(0) + 1)
+  }
+  return output
+}
+console.log(range)
+</script>
+
 <!-- Edit this one. -->
 <script id="metascript" type="text">
 &lt;table id=t>&lt;script>for(a=h=e=[];6>a;a++)for(h+="<tr>",c=0;d="@ABCDE"[c];h+="<td>"+(a*c++?"<input id=D onfocus=D[V]=[l.D] onblur=A(l.D=D[V])>".replace(/D/g,e[d+a]=d+a):+a||d))function A(){with(t)for(i in e)t[i]=top[i][V='value']="="!=(b=l[i]||'')[0]?b!=+b?b:(t[i]=b&&+b):eval(b.slice(1).replace(/([A-Z][0-9]*):([A-Z][0-9]*)/, 'range("$1","$2")'))}A(l=localStorage,t.innerHTML=h)&lt;/script>
@@ -63,22 +84,6 @@ source.textContent = table_code
 
 <!-- Tests -->
 <script>
-// Verbose range implementation
-function range(topLeft,bottomRight){
-  var output = []
-    , column = topLeft.substring(0,1)
-  while(column < bottomRight.slice(1)){
-    output.push([])
-    while(row < bottomRight.substring(0,1)){
-      output[output.length].push(localStorage[column+row])
-    }
-  }
-  return output
-}
-
-
-
-
 test()
 function test() {
   for (key in localStorage) { localStorage.removeItem(key) }
