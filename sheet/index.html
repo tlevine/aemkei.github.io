@@ -1,6 +1,6 @@
 <!-- Edit this one. -->
 <script id="metascript" type="text">
-&lt;table id=t>&lt;script>for(a=h=e=[];6>a;a++)for(h+="<tr>",c=0;d="@ABCDE"[c];h+="<td>"+(a*c++?"<input id=D onfocus=D[V]=[l.D] onblur=A(l.D=D[V])>".replace(/D/g,e[d+a]=d+a):+a||d))function A(){with(t)for(i in e)t[i]=top[i][V='value']="="!=(b=l[i]||'')[0]?b!=+b?b:(t[i]=b&&+b):eval(b.slice(1))}A(l=localStorage,t.innerHTML=h)&lt;/script>
+&lt;table id=t>&lt;script>for(a=h=e=[];6>a;a++)for(h+="<tr>",c=0;d="@ABCDE"[c];h+="<td>"+(a*c++?"<input id=D onfocus=D[V]=[l.D] onblur=A(l.D=D[V])>".replace(/D/g,e[d+a]=d+a):+a||d))function A(){with(t)for(i in e)t[i]=top[i][V='value']="="!=(b=l[i]||'')[0]?b!=+b?b:(t[i]=b&&+b):eval(b.slice(1).replace(/([A-Z][0-9]*):([A-Z][0-9]*)/, 'range("$1","$2")'))}A(l=localStorage,t.innerHTML=h)&lt;/script>
 </script>
 
 <script>
@@ -63,7 +63,23 @@ source.textContent = table_code
 
 <!-- Tests -->
 <script>
-// test()
+// Verbose range implementation
+function range(topLeft,bottomRight){
+  var output = []
+    , column = topLeft.substring(0,1)
+  while(column < bottomRight.slice(1)){
+    output.push([])
+    while(row < bottomRight.substring(0,1)){
+      output[output.length].push(localStorage[column+row])
+    }
+  }
+  return output
+}
+
+
+
+
+test()
 function test() {
   for (key in localStorage) { localStorage.removeItem(key) }
 
@@ -83,8 +99,30 @@ function test() {
   check('C2','7')
 
   testcase('Horizontal ranges (A1:C1)')
+  set('A1','1')
+  set('B1','2')
+  set('C1','3')
+  set('D1','=(A1:C1).length')
+  check('D1','3')
+
   testcase('Vertical ranges (A1:A3)')
+  set('A2','1')
+  set('A3','2')
+  set('A4','3')
+  set('D2','=(A2:A4).length')
+  check('D2','3')
+
   testcase('Rectangular ranges (A1:C3)')
+  set('A1','1')
+  set('B1','2')
+  set('C1','3')
+  set('A2','4')
+  set('B2','5')
+  set('C2','6')
+  set('D3','=(A1:C2).length')
+  check('D3','6')
+//set('D2','=(A1:C2).reduce(function(a,b){return a+b})')
+//check('D2',''+(7*3))
 
   /*
   testcase('There should be 26 columns.')
